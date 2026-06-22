@@ -17,7 +17,7 @@ class StaffController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Daftar Guru dan Tendik',
+            'message' => 'Daftar Pustakawan dan Staf',
             'data' => $staffs
         ]);
     }

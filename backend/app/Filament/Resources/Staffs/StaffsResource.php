@@ -20,7 +20,7 @@ class StaffsResource extends Resource
 
     protected static string | UnitEnum | null $navigationGroup = 'Manajemen Web';
 
-    protected static ?string $navigationLabel = 'Guru & Tendik';
+    protected static ?string $navigationLabel = 'Staff Perpustakaan';
 
     protected static ?string $modelLabel = 'Staff';
 

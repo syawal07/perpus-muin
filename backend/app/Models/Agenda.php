@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agenda extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'title', 
+        'slug', 
+        'description', 
+        'image', 
+        'start_date', 
+        'end_date', 
+        'location'
+    ];
 }

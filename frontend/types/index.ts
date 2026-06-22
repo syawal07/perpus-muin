@@ -3,6 +3,7 @@ export interface NewsItem {
   title: string;
   category: string;
   slug: string;
+  author_name: string | null; // Ditambahkan sesuai backend
   content: string;
   image: string | null;
   published_at: string;
@@ -19,15 +20,6 @@ export interface AgendaItem {
   start_date: string;
   end_date: string;
   location: string | null;
-}
-
-export interface DirectorItem {
-  id: number;
-  name: string;
-  image: string | null;
-  start_year: number;
-  end_year: number | null;
-  position: string;
 }
 
 export interface PageItem {
@@ -60,6 +52,8 @@ export interface SettingItem {
   footer_logo: string | null;   
   instagram: string | null;
   youtube: string | null;
+  opac_url: string | null;            // Ditambahkan untuk link OPAC
+  operational_hours: string | null;   // Ditambahkan untuk Jam Layanan
   is_announcement_active: boolean;
   announcement_text: string | null;
   announcement_link: string | null;

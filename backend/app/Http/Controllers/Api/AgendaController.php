@@ -23,7 +23,7 @@ class AgendaController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Daftar Agenda Kegiatan',
+            'message' => 'Daftar Agenda Literasi & Kegiatan Perpustakaan',
             'data'    => $agendas
         ]);
     }
@@ -41,7 +41,7 @@ class AgendaController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Detail Agenda',
+            'message' => 'Detail Agenda Perpustakaan',
             'data'    => $agenda
         ]);
     }

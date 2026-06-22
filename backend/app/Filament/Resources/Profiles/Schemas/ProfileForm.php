@@ -21,28 +21,31 @@ class ProfileForm
                     ->required()
                     ->maxLength(255),
                 Select::make('category')
+                    ->label('Kategori Halaman')
                     ->options([
-                        'sejarah' => 'Sejarah (Muqadimah)',
+                        'sejarah' => 'Profil & Sejarah Perpustakaan',
                         'visi-misi' => 'Visi, Misi & Tujuan',
-                        'logo' => 'Makna Logo',
-                        'fasilitas' => 'Fasilitas',
-                        'kurikulum' => 'Kurikulum',
-                        'biaya' => 'Biaya Pendidikan',
-                        'brosur' => 'Brosur',
+                        'fasilitas' => 'Fasilitas & Layanan',
+                        'tata-tertib' => 'Tata Tertib Perpustakaan',
+                        'panduan-opac' => 'Panduan Pencarian OPAC',
+                        'keanggotaan' => 'Syarat Keanggotaan',
                     ])
                     ->required(),
                 RichEditor::make('content')
+                    ->label('Konten Halaman')
                     ->columnSpanFull(),
                 FileUpload::make('image')
+                    ->label('Gambar Utama / Banner')
                     ->image()
                     ->directory('profiles/images')
                     ->required()
                     ->maxSize(2048),
                 FileUpload::make('file_pdf')
+                    ->label('Lampiran PDF')
                     ->acceptedFileTypes(['application/pdf'])
                     ->directory('profiles/pdf')
                     ->maxSize(5120)
-                    ->helperText('Opsional. Hanya menerima file PDF (Maksimal 5MB).'),
+                    ->helperText('Opsional. Gunakan untuk melampirkan Dokumen Panduan atau SK (Maksimal 5MB).'),
                 Select::make('status')
                     ->options(['draft' => 'Draft', 'published' => 'Published'])
                     ->default('draft')

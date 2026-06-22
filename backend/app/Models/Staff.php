@@ -12,8 +12,13 @@ class Staff extends Model
     // Wajib ada karena nama tabel pakai 's' (staffs)
     protected $table = 'staffs';
 
-    // Cara instan (sama seperti model Setting)
-    protected $guarded = [];
+    protected $fillable = [
+        'name', 
+        'type', 
+        'subject', 
+        'image', 
+        'is_active'
+    ];
 
     protected $casts = [
         'is_active' => 'boolean',

@@ -7,7 +7,6 @@ use App\Models\Page;
 
 class PageController extends Controller
 {
-    // Mengambil daftar semua halaman (biasanya untuk menu navigasi di Next.js)
     public function index()
     {
         $pages = Page::orderBy('title', 'asc')
@@ -19,12 +18,11 @@ class PageController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Daftar Semua Halaman',
+            'message' => 'Daftar Semua Halaman Perpustakaan',
             'data'    => $pages
         ]);
     }
 
-    // Mengambil detail satu halaman spesifik berdasarkan slug (misal: /api/pages/profil)
     public function show($slug)
     {
         $page = Page::where('slug', $slug)->first();
@@ -38,7 +36,7 @@ class PageController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Data Halaman',
+            'message' => 'Data Halaman Perpustakaan',
             'data'    => $page
         ]);
     }

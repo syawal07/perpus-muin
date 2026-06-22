@@ -22,20 +22,20 @@ export default function Error({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
         </div>
-        <h2 className="text-3xl font-extrabold text-brand-blue mb-4">Ups! Terjadi Kesalahan</h2>
+        <h2 className="text-3xl font-extrabold text-brand-green mb-4">Ups! Terjadi Kesalahan</h2>
         <p className="text-gray-600 mb-8 leading-relaxed">
-          Sistem kami gagal terhubung ke server atau sedang dalam perbaikan. Mohon coba beberapa saat lagi.
+          Sistem perpustakaan kami gagal terhubung ke server atau sedang dalam perbaikan. Mohon coba beberapa saat lagi.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={() => reset()}
-            className="bg-brand-blue text-white px-8 py-3 rounded-full font-bold hover:bg-blue-800 transition-all shadow-md"
+            className="bg-brand-green text-white px-8 py-3 rounded-full font-bold hover:bg-green-800 transition-all shadow-md"
           >
             Coba Ulangi
           </button>
           <Link
             href="/"
-            className="bg-brand-yellow text-brand-blue px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-all shadow-md"
+            className="bg-brand-yellow text-brand-green px-8 py-3 rounded-full font-bold hover:bg-yellow-400 transition-all shadow-md"
           >
             Kembali ke Beranda
           </Link>

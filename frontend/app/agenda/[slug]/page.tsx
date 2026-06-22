@@ -46,9 +46,9 @@ export default async function DetailAgenda({
 
   return (
     <main className="min-h-screen bg-gray-50 py-12 px-6">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto mt-20">
         
-        <Link href="/agenda" className="inline-flex items-center text-brand-blue font-semibold hover:text-brand-yellow transition-colors mb-8 group">
+        <Link href="/agenda" className="inline-flex items-center text-brand-green font-semibold hover:text-brand-yellow transition-colors mb-8 group">
           <svg className="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
@@ -76,13 +76,13 @@ export default async function DetailAgenda({
 
             <div className="flex flex-col md:flex-row gap-4 mb-10 pb-10 border-b border-gray-100">
               
-              <div className="flex items-start gap-4 p-4 bg-blue-50/50 rounded-2xl flex-1 border border-blue-100/50">
-                <div className="w-12 h-12 bg-brand-blue text-white rounded-full flex items-center justify-center shrink-0 shadow-inner">
+              <div className="flex items-start gap-4 p-4 bg-green-50/50 rounded-2xl flex-1 border border-green-100/50">
+                <div className="w-12 h-12 bg-brand-green text-white rounded-full flex items-center justify-center shrink-0 shadow-inner">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Waktu Pelaksanaan</h3>
-                  <p className="font-semibold text-brand-blue">{formattedStartDate}</p>
+                  <p className="font-semibold text-brand-green">{formattedStartDate}</p>
                   {formattedStartDate !== formattedEndDate && (
                     <p className="text-sm text-gray-500 mt-0.5">s/d {formattedEndDate}</p>
                   )}
@@ -90,13 +90,13 @@ export default async function DetailAgenda({
               </div>
 
               {agenda.location && (
-                <div className="flex items-start gap-4 p-4 bg-blue-50/50 rounded-2xl flex-1 border border-blue-100/50">
-                  <div className="w-12 h-12 bg-brand-yellow text-brand-blue rounded-full flex items-center justify-center shrink-0 shadow-inner">
+                <div className="flex items-start gap-4 p-4 bg-green-50/50 rounded-2xl flex-1 border border-green-100/50">
+                  <div className="w-12 h-12 bg-brand-yellow text-brand-green rounded-full flex items-center justify-center shrink-0 shadow-inner">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Lokasi</h3>
-                    <p className="font-semibold text-brand-blue">{agenda.location}</p>
+                    <p className="font-semibold text-brand-green">{agenda.location}</p>
                   </div>
                 </div>
               )}
@@ -106,7 +106,7 @@ export default async function DetailAgenda({
               <h3 className="text-xl font-bold text-gray-800 mb-4">Detail Kegiatan</h3>
               {agenda.description ? (
                  <div 
-                   className="prose prose-lg prose-blue max-w-none text-gray-600"
+                   className="prose prose-lg prose-green max-w-none text-gray-600"
                    dangerouslySetInnerHTML={{ __html: agenda.description }}
                  />
               ) : (

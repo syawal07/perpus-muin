@@ -13,8 +13,8 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Madrasah Mu'allimin Muhammadiyah",
-  description: "Website Resmi Madrasah Mu'allimin Muhammadiyah Yogyakarta",
+  title: "Perpustakaan Digital Mu'allimin",
+  description: "Pusat Layanan Literasi, Interaksi, dan Ekosistem Pengetahuan Digital",
 };
 
 async function getSettings(): Promise<SettingItem | null> {

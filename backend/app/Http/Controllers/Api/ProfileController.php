@@ -30,7 +30,7 @@ class ProfileController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Daftar Profil Muallimin',
+            'message' => 'Daftar Panduan dan Profil Perpustakaan',
             'data'    => $profiles
         ]);
     }
@@ -44,13 +44,13 @@ class ProfileController extends Controller
         if (!$profile) {
             return response()->json([
                 'success' => false,
-                'message' => 'Profil tidak ditemukan'
+                'message' => 'Profil / Panduan tidak ditemukan'
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Detail Profil',
+            'message' => 'Detail Profil Perpustakaan',
             'data'    => $profile
         ]);
     }

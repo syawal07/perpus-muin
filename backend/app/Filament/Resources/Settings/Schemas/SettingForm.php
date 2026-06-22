@@ -13,11 +13,10 @@ class SettingForm
     {
         return $schema
             ->components([
-                // --- INFORMASI UMUM ---
                 TextInput::make('site_name')
-                    ->label('Nama Situs')
+                    ->label('Nama Situs Perpustakaan')
                     ->maxLength(255)
-                    ->default('Madrasah Mu\'allimin Muhammadiyah'),
+                    ->default('Perpustakaan Mu\'allimin'),
                 TextInput::make('address')
                     ->label('Alamat Lengkap')
                     ->maxLength(255),
@@ -28,6 +27,17 @@ class SettingForm
                     ->label('Email Resmi')
                     ->email()
                     ->maxLength(255),
+                
+                // Input Baru
+                TextInput::make('opac_url')
+                    ->label('URL OPAC (Katalog Pencarian)')
+                    ->url()
+                    ->maxLength(255),
+                TextInput::make('operational_hours')
+                    ->label('Jam Layanan Perpustakaan')
+                    ->placeholder('Contoh: Senin - Sabtu, 07:30 - 15:00 WIB')
+                    ->maxLength(255),
+
                 FileUpload::make('navbar_logo')
                     ->label('Logo Utama (Navbar)')
                     ->image()
@@ -47,16 +57,15 @@ class SettingForm
                     ->url()
                     ->maxLength(255),
 
-                // --- PENGUMUMAN RUNNING TEXT ---
                 Toggle::make('is_announcement_active')
-                    ->label('Aktifkan Banner Pengumuman? (Running Text di bagian paling atas web)'),
+                    ->label('Aktifkan Banner Pengumuman?'),
                 TextInput::make('announcement_text')
                     ->label('Isi Teks Pengumuman')
-                    ->placeholder('Contoh: Pendaftaran SPMB Gelombang 2 Telah Dibuka!'),
+                    ->placeholder('Contoh: Pendaftaran Anggota Perpustakaan Telah Dibuka!'),
                 TextInput::make('announcement_link')
                     ->label('Link Tujuan Pengumuman (Opsional)')
                     ->url()
-                    ->placeholder('https://spmb.muallimin.sch.id/'),
+                    ->placeholder('https://libsys-online.xyz/muallimin'),
             ]);
     }
 }

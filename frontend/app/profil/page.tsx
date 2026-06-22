@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { DirectorItem, ProfileItem } from "@/types";
+import { ProfileItem } from "@/types";
 
 async function getProfileByCategory(category: string): Promise<ProfileItem | null> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -19,24 +19,6 @@ async function getProfileByCategory(category: string): Promise<ProfileItem | nul
   return json.data && json.data.length > 0 ? json.data[0] : null;
 }
 
-async function getDirectors(): Promise<DirectorItem[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-  
-  const res = await fetch(`${apiUrl}/api/directors`, { next: { revalidate: 60 } });
-  
-  if (!res.ok) {
-    throw new Error(`HTTP Error Directors: ${res.status}`);
-  }
-  
-  const json = await res.json();
-  
-  if (!json || !json.data) {
-    throw new Error("Invalid data format received inside directors api");
-  }
-  
-  return json.data || json;
-}
-
 export default async function ProfilMadrasah({
   searchParams,
 }: {
@@ -46,7 +28,6 @@ export default async function ProfilMadrasah({
   const category = typeof resolvedParams.category === 'string' ? resolvedParams.category : 'sejarah';
   
   const profileData = await getProfileByCategory(category);
-  const directors = category === 'sejarah' ? await getDirectors() : [];
   const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000';
   
   return (
@@ -69,7 +50,7 @@ export default async function ProfilMadrasah({
         
         <div className="max-w-4xl mx-auto relative z-10 pt-10">
           <span className="text-brand-yellow font-bold tracking-widest uppercase text-sm mb-4 block">
-            Profil Mu&apos;allimin
+            Profil Perpustakaan
           </span>
           <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight capitalize">
             {profileData?.title || category.replace('-', ' ')}
@@ -113,55 +94,6 @@ export default async function ProfilMadrasah({
           </div>
         )}
       </section>
-
-      {category === 'sejarah' && (
-        <section className="bg-gray-50 py-24 px-6 border-t border-gray-100">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-brand-blue mb-4">Direktur dari Masa ke Masa</h2>
-              <div className="w-24 h-1.5 bg-brand-yellow mx-auto mb-6 rounded-full"></div>
-              <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-                Penghormatan kepada para pimpinan yang telah menakhodai perjalanan Madrasah Mu&apos;allimin Muhammadiyah dari generasi ke generasi.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {directors && directors.length > 0 ? (
-                directors.map((director: DirectorItem) => (
-                  <div key={director.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                    <div className="relative w-full h-64 bg-gray-100 overflow-hidden">
-                      {director.image ? (
-                        <Image 
-                          src={`${storageUrl}/${director.image}`} 
-                          alt={director.name}
-                          fill
-                          sizes="(max-width: 768px) 50vw, 25vw"
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center bg-blue-50 text-brand-blue">
-                          <span className="opacity-50 font-medium text-sm">Belum ada foto</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-lg font-bold text-brand-blue mb-1 leading-snug">{director.name}</h3>
-                      <p className="text-sm font-bold text-brand-yellow">
-                        {director.start_year} - {director.end_year ? director.end_year : 'Sekarang'}
-                      </p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="col-span-full text-center text-gray-500 py-10 bg-white rounded-2xl border border-gray-100">
-                  Belum ada data direktur yang terdaftar.
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
     </main>
   );
 }

@@ -23,6 +23,7 @@ class PostController extends Controller
                 'title', 
                 'category',
                 'slug', 
+                'author_name', // Ditambahkan
                 'content',
                 'image',
                 'published_at',
@@ -32,7 +33,7 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Daftar Berita Terbaru Muallimin',
+            'message' => 'Daftar Literasi & Artikel Perpustakaan',
             'data'    => $news
         ]);
     }
@@ -46,7 +47,7 @@ class PostController extends Controller
         if (!$news) {
             return response()->json([
                 'success' => false,
-                'message' => 'Berita tidak ditemukan'
+                'message' => 'Artikel tidak ditemukan'
             ], 404);
         }
 
@@ -54,7 +55,7 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Detail Berita',
+            'message' => 'Detail Artikel',
             'data'    => $news
         ]);
     }
@@ -68,7 +69,7 @@ class PostController extends Controller
         if (!$news) {
             return response()->json([
                 'success' => false,
-                'message' => 'Berita tidak ditemukan'
+                'message' => 'Artikel tidak ditemukan'
             ], 404);
         }
 
@@ -76,7 +77,7 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Berita disukai',
+            'message' => 'Artikel disukai',
             'data'    => [
                 'likes' => $news->likes
             ]

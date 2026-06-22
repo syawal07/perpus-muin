@@ -9,5 +9,13 @@ class Profile extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'title', 
+        'slug', 
+        'category', 
+        'content', 
+        'image', 
+        'file_pdf', 
+        'status'
+    ];
 }

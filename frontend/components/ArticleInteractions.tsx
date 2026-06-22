@@ -47,8 +47,8 @@ export default function ArticleInteractions({ slug, initialLikes, title }: Artic
         disabled={hasLiked || isLiking}
         className={`flex items-center gap-2 p-3 px-5 rounded-full transition-all shadow-sm border ${
           hasLiked 
-            ? 'bg-red-50 text-red-500 border-red-100 cursor-default' 
-            : 'bg-white text-gray-500 border-gray-100 hover:border-brand-blue hover:text-brand-blue'
+            ? 'bg-green-50 text-green-600 border-green-100 cursor-default' 
+            : 'bg-white text-gray-500 border-gray-100 hover:border-brand-green hover:text-brand-green'
         }`}
       >
         <svg className="w-5 h-5" fill={hasLiked ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">

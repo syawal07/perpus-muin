@@ -14,7 +14,7 @@ interface NavbarProps {
 
 export default function Navbar({ settings }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isBeritaOpen, setIsBeritaOpen] = useState(false);
+  const [isLiterasiOpen, setIsLiterasiOpen] = useState(false);
   const [isProfilOpen, setIsProfilOpen] = useState(false);
   const pathname = usePathname();
   const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000';
@@ -31,7 +31,7 @@ export default function Navbar({ settings }: NavbarProps) {
   }, []);
 
   const navBackground = isScrolled || !isHomePage 
-    ? 'bg-brand-blue shadow-lg py-2' 
+    ? 'bg-brand-green shadow-lg py-2' 
     : 'bg-transparent py-4';
 
   const currentSetting = Array.isArray(settings) ? settings[0] : settings;
@@ -61,7 +61,7 @@ export default function Navbar({ settings }: NavbarProps) {
                 <div className="relative w-12 h-12 bg-white rounded-full p-1 overflow-hidden shadow-sm flex items-center justify-center">
                   <Image 
                     src={`${storageUrl}/${currentSetting.navbar_logo}`} 
-                    alt="Logo Mu'allimin" 
+                    alt="Logo Perpustakaan" 
                     fill 
                     className="object-contain p-1.5"
                     sizes="48px"
@@ -69,13 +69,13 @@ export default function Navbar({ settings }: NavbarProps) {
                 </div>
               ) : (
                 <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-1 shadow-sm">
-                  <span className="text-brand-blue font-bold text-[10px]">LOGO</span>
+                  <span className="text-brand-green font-bold text-[10px]">LOGO</span>
                 </div>
               )}
               
               <Link href="/" className="text-2xl font-extrabold text-white tracking-tight leading-tight drop-shadow-md">
-                MU&apos;ALLIMIN <br/>
-                <span className="text-sm font-medium tracking-normal opacity-90 drop-shadow-md">YOGYAKARTA</span>
+                PERPUSTAKAAN <br/>
+                <span className="text-sm font-medium tracking-normal opacity-90 drop-shadow-md">MU&apos;ALLIMIN</span>
               </Link>
             </div>
 
@@ -83,26 +83,26 @@ export default function Navbar({ settings }: NavbarProps) {
               
               <div 
                 className="relative group"
-                onMouseEnter={() => setIsBeritaOpen(true)}
-                onMouseLeave={() => setIsBeritaOpen(false)}
+                onMouseEnter={() => setIsLiterasiOpen(true)}
+                onMouseLeave={() => setIsLiterasiOpen(false)}
               >
                 <button className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm py-2">
-                  Berita
-                  <svg className={`w-4 h-4 transition-transform duration-200 ${isBeritaOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  Koleksi Literasi
+                  <svg className={`w-4 h-4 transition-transform duration-200 ${isLiterasiOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                   </svg>
                 </button>
 
                 <div 
                   className={`absolute top-full left-0 w-48 bg-white rounded-lg shadow-xl py-2 mt-1 transition-all duration-200 origin-top ${
-                    isBeritaOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'
+                    isLiterasiOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'
                   }`}
                 >
-                  <Link href="/berita" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Semua Berita</Link>
-                  <Link href="/berita?category=karier" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Karier</Link>
-                  <Link href="/berita?category=kegiatan" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Kegiatan</Link>
-                  <Link href="/berita?category=karya" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Karya</Link>
-                  <Link href="/berita?category=prestasi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Prestasi</Link>
+                  <Link href="/berita" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Semua Koleksi</Link>
+                  <Link href="/berita?category=informasi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Informasi</Link>
+                  <Link href="/berita?category=literasi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Literasi</Link>
+                  <Link href="/berita?category=resensi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Resensi Buku</Link>
+                  <Link href="/berita?category=pengumuman" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Pengumuman</Link>
                 </div>
               </div>
 
@@ -112,46 +112,40 @@ export default function Navbar({ settings }: NavbarProps) {
                 onMouseLeave={() => setIsProfilOpen(false)}
               >
                 <button className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm py-2">
-                  Profil
+                  Profil & Panduan
                   <svg className={`w-4 h-4 transition-transform duration-200 ${isProfilOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                   </svg>
                 </button>
 
                 <div 
-                  className={`absolute top-full left-0 w-48 bg-white rounded-lg shadow-xl py-2 mt-1 transition-all duration-200 origin-top ${
+                  className={`absolute top-full left-0 w-56 bg-white rounded-lg shadow-xl py-2 mt-1 transition-all duration-200 origin-top ${
                     isProfilOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'
                   }`}
                 >
-                  <Link href="/profil?category=sejarah" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Sejarah (Muqadimah)</Link>
-                  <Link href="/profil?category=visi-misi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Visi, Misi, Tujuan</Link>
-                  <Link href="/profil?category=logo" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Makna Logo</Link>
-                  <Link href="/profil?category=fasilitas" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Fasilitas</Link>
-                  <Link href="/profil?category=kurikulum" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Kurikulum</Link>
-                  <Link href="/profil?category=biaya" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Biaya Pendidikan</Link>
-                  <Link href="/profil?category=brosur" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-blue">Brosur</Link>
+                  <Link href="/profil?category=sejarah" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Profil & Sejarah</Link>
+                  <Link href="/profil?category=visi-misi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Visi, Misi & Tujuan</Link>
+                  <Link href="/profil?category=fasilitas" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Fasilitas & Layanan</Link>
+                  <Link href="/profil?category=tata-tertib" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Tata Tertib</Link>
+                  <Link href="/profil?category=panduan-opac" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Panduan OPAC</Link>
+                  <Link href="/profil?category=keanggotaan" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Syarat Keanggotaan</Link>
                 </div>
               </div>
 
               <Link href="/agenda" className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm">
-                Agenda
+                Agenda Kegiatan
               </Link>
 
-              {/* Tautan Guru & Tendik Ditambahkan Di Sini */}
               <Link href="/guru-tendik" className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm">
-                Guru & Tendik
+                Pustakawan & Staf
               </Link>
               
             </div>
             
-
             <div className="flex items-center justify-end z-20 gap-4">
               <div className="hidden md:flex items-center gap-3">
-                <a href="https://alumni.muallimin.sch.id/" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-brand-blue px-6 py-2.5 rounded-full font-bold hover:bg-gray-100 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
-                  Portal Alumni
-                </a>
-                <a href="https://spmb.muallimin.sch.id/" target="_blank" rel="noopener noreferrer" className="inline-block bg-brand-yellow text-brand-blue px-7 py-2.5 rounded-full font-bold hover:bg-yellow-400 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
-                  Portal SPMB
+                <a href={currentSetting?.opac_url || "https://www.libsys-online.xyz/muallimin/opac/"} target="_blank" rel="noopener noreferrer" className="inline-block bg-brand-yellow text-brand-green px-7 py-2.5 rounded-full font-bold hover:bg-yellow-400 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+                  Katalog OPAC
                 </a>
               </div>
               <MobileMenu />

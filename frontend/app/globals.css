@@ -1,11 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  /* Biru Royal Muhammadiyah (Diekstrak dari logo) */
-  --color-brand-blue: #0D47A1; 
+  /* Hijau Utama (bs-green) */
+  --color-brand-green: #198754; 
   
-  /* Kuning Cerah Muhammadiyah (Diekstrak dari logo) */
-  --color-brand-yellow: #FFD500; 
+  /* Kuning Aisyiyah (bs-warning) */
+  --color-brand-yellow: #ffc107; 
+
+  /* Oranye UAD */
+  --color-brand-orange: #f26522; 
 
   /* Definisi Animasi */
   --animate-marquee: marquee 25s linear infinite;

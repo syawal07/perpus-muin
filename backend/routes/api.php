@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 // Import semua Controller yang sudah kita buat
 use App\Http\Controllers\Api\AgendaController;
-use App\Http\Controllers\Api\DirectorController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\SettingController;
@@ -30,8 +29,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::get('/agendas', [AgendaController::class, 'index']);
 Route::get('/agendas/{slug}', [AgendaController::class, 'show']);
 
-// Endpoint Direktur (Masa ke Masa)
-Route::get('/directors', [DirectorController::class, 'index']);
+
 
 // Endpoint Berita
 Route::get('/posts', [PostController::class, 'index']);

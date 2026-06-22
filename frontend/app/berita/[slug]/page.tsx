@@ -26,7 +26,7 @@ async function getArticle(slug: string): Promise<NewsItem | null> {
   
   if (!res.ok) {
     if (res.status === 404) return null;
-    throw new Error(`HTTP Error Detail Berita: ${res.status}`);
+    throw new Error(`HTTP Error Detail Artikel: ${res.status}`);
   }
 
   const json = await res.json();
@@ -50,18 +50,18 @@ export async function generateMetadata({
 
   const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000';
   const cleanTitle = decodeHTMLEntities(article.title);
-  const cleanDescription = article.content ? stripHtmlAndTruncate(article.content) : `Berita terbaru kategori ${article.category} dari Madrasah Mu'allimin.`;
+  const cleanDescription = article.content ? stripHtmlAndTruncate(article.content) : `Koleksi literasi terbaru kategori ${article.category} dari Perpustakaan Mu'allimin.`;
   const imageUrl = article.image ? `${storageUrl}/${article.image}` : '';
 
   return {
-    title: `${cleanTitle} | Mu'allimin Yogyakarta`,
+    title: `${cleanTitle} | Perpustakaan Mu'allimin`,
     description: cleanDescription,
     openGraph: {
       title: cleanTitle,
       description: cleanDescription,
       type: 'article',
       url: `/berita/${article.slug}`,
-      siteName: "Mu'allimin Yogyakarta",
+      siteName: "Perpustakaan Mu'allimin Yogyakarta",
       images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630, alt: cleanTitle }] : [],
     },
     twitter: {
@@ -89,19 +89,19 @@ export default async function DetailBerita({
   return (
     <main className="min-h-screen bg-gray-50 pb-24">
       
-      <section className="bg-brand-blue pt-40 pb-32 px-6 text-center text-white relative overflow-hidden flex flex-col items-center">
+      <section className="bg-brand-green pt-40 pb-32 px-6 text-center text-white relative overflow-hidden flex flex-col items-center">
         <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')] z-0"></div>
         
         <div className="max-w-5xl mx-auto relative z-10 w-full">
           <div className="flex justify-center md:justify-start mb-8">
              <Link href="/berita" className="inline-flex items-center gap-2 text-white/80 hover:text-brand-yellow font-medium transition-colors text-sm uppercase tracking-widest border border-white/20 px-4 py-2 rounded-full hover:border-brand-yellow">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                Kembali ke Berita
+                Kembali ke Koleksi
              </Link>
           </div>
 
           <div className="flex items-center justify-center md:justify-start gap-3 mb-6 flex-wrap">
-            <div className="bg-brand-yellow text-brand-blue px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest shadow-sm">
+            <div className="bg-brand-yellow text-brand-green px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest shadow-sm">
               {article.category}
             </div>
             <div className="bg-white/10 backdrop-blur-sm text-white border border-white/20 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest">
@@ -116,16 +116,24 @@ export default async function DetailBerita({
             {decodeHTMLEntities(article.title)}
           </h1>
           
-          <div className="flex items-center justify-center md:justify-start gap-2 text-white/70 text-sm font-medium">
-             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-             {article.views || 0} Kali Dibaca
+          <div className="flex items-center justify-center md:justify-start gap-4 text-white/70 text-sm font-medium flex-wrap">
+             {article.author_name && (
+               <div className="flex items-center gap-1.5">
+                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                 Oleh: {article.author_name}
+               </div>
+             )}
+             <div className="flex items-center gap-1.5">
+               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+               {article.views || 0} Kali Dibaca
+             </div>
           </div>
         </div>
       </section>
 
       <article className="px-6 max-w-5xl mx-auto -mt-20 relative z-20">
         
-        <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-blue-900/5 p-6 md:p-14 border border-gray-100">
+        <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-green-900/5 p-6 md:p-14 border border-gray-100">
           
           {article.image && (
             <div className="relative w-full h-64 md:h-137.5 mb-14 rounded-3xl overflow-hidden shadow-inner">
@@ -143,8 +151,8 @@ export default async function DetailBerita({
           <div 
             className="prose prose-lg md:prose-xl max-w-none text-gray-800 
             [&_p]:mb-6! [&_p]:mt-0! [&_p]:leading-relaxed! [&_p]:text-justify!
-            prose-headings:text-brand-blue prose-headings:font-bold prose-headings:text-left
-            prose-strong:text-brand-blue prose-img:rounded-3xl prose-img:mx-auto
+            prose-headings:text-brand-green prose-headings:font-bold prose-headings:text-left
+            prose-strong:text-brand-green prose-img:rounded-3xl prose-img:mx-auto
             prose-blockquote:border-l-brand-yellow prose-blockquote:bg-gray-50 prose-blockquote:py-3 
             prose-blockquote:px-8 prose-blockquote:rounded-r-xl prose-blockquote:italic prose-blockquote:text-gray-600 prose-blockquote:text-left"
             dangerouslySetInnerHTML={{ __html: article.content }}
@@ -152,7 +160,7 @@ export default async function DetailBerita({
           
           <footer className="mt-20 pt-10 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-gray-400 text-sm italic font-medium">
-              &copy; {new Date().getFullYear()} Madrasah Mu&apos;allimin
+              &copy; {new Date().getFullYear()} Perpustakaan Mu&apos;allimin
             </div>
             
             <ArticleInteractions 

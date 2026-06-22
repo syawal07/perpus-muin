@@ -15,18 +15,24 @@ class StaffsForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Nama Lengkap')
                     ->required()
                     ->maxLength(255),
                 Select::make('type')
+                    ->label('Kategori Staf')
                     ->options([
-                        'Guru' => 'Guru',
-                        'Tenaga Kependidikan' => 'Tenaga Kependidikan',
+                        'Kepala Perpustakaan' => 'Kepala Perpustakaan',
+                        'Pustakawan' => 'Pustakawan',
+                        'Staf Layanan & IT' => 'Staf Layanan & IT',
+                        'Tenaga Administrasi' => 'Tenaga Administrasi',
                     ])
                     ->required(),
                 TextInput::make('subject')
-                    ->label('Mata Pelajaran')
+                    ->label('Bidang Tugas / Jabatan')
+                    ->placeholder('Contoh: Layanan Referensi / Layanan Sirkulasi')
                     ->maxLength(255),
                 FileUpload::make('image')
+                    ->label('Foto Profil')
                     ->image()
                     ->directory('staffs')
                     ->maxSize(2048),

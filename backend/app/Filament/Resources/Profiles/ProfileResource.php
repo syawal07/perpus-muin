@@ -25,7 +25,7 @@ class ProfileResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = 'Manajemen Web';
 
-    protected static ?string $navigationLabel = 'Profil Mu\'allimin';
+    protected static ?string $navigationLabel = 'Profil Perpustakaan Muin';
 
     public static function form(Schema $schema): Schema
     {

@@ -23,13 +23,17 @@ class PostForm
                     ->maxLength(255),
                 Select::make('category')
                     ->options([
-                        'karier' => 'Karier',
-                        'kegiatan' => 'Kegiatan',
-                        'karya' => 'Karya',
-                        'prestasi' => 'Prestasi',
+                        'informasi' => 'Informasi',
+                        'literasi' => 'Literasi',
+                        'resensi' => 'Resensi Buku',
+                        'pengumuman' => 'Pengumuman',
                     ])
-                    ->default('kegiatan')
+                    ->default('informasi')
                     ->required(),
+                TextInput::make('author_name')
+                    ->label('Penulis / Pustakawan')
+                    ->placeholder('Contoh: Pustakawan Muallimin')
+                    ->maxLength(255),
                 RichEditor::make('content')
                     ->required()
                     ->columnSpanFull(),

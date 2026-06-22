@@ -34,13 +34,13 @@ export default async function DaftarAgenda() {
     <main className="min-h-screen bg-gray-50 py-20 px-6">
       <div className="max-w-4xl mx-auto">
         
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-brand-blue mb-4">
-            Agenda Kegiatan Madrasah
+        <div className="text-center mb-16 mt-20">
+          <h1 className="text-4xl md:text-5xl font-bold text-brand-green mb-4">
+            Agenda & Kegiatan Perpustakaan
           </h1>
           <div className="w-24 h-1.5 bg-brand-yellow mx-auto mb-6"></div>
           <p className="text-gray-600 text-lg">
-            Pantau jadwal kegiatan, ujian, acara besar, dan pengumuman penting di lingkungan Madrasah Mu&apos;allimin Muhammadiyah.
+            Pantau jadwal kegiatan literasi, bedah buku, pelatihan e-resources, dan acara penting lainnya di Perpustakaan Mu&apos;allimin Muhammadiyah.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ export default async function DaftarAgenda() {
             agendas.map((agenda: AgendaItem) => (
               <Link href={`/agenda/${agenda.slug}`} key={agenda.id} className="flex flex-col md:flex-row gap-6 items-start p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow bg-white cursor-pointer group">
                 
-                <div className="bg-brand-blue text-white rounded-xl p-5 text-center min-w-27.5 shrink-0 shadow-inner group-hover:bg-blue-800 transition-colors">
+                <div className="bg-brand-green text-white rounded-xl p-5 text-center min-w-27.5 shrink-0 shadow-inner group-hover:bg-green-800 transition-colors">
                   <span className="block text-4xl font-bold leading-none mb-1">
                     {new Date(agenda.start_date).getDate()}
                   </span>
@@ -59,7 +59,7 @@ export default async function DaftarAgenda() {
                 </div>
                 
                 <div className="grow pt-1">
-                  <h3 className="text-xl font-bold text-gray-800 mb-3 leading-snug group-hover:text-brand-blue transition-colors">
+                  <h3 className="text-xl font-bold text-gray-800 mb-3 leading-snug group-hover:text-brand-green transition-colors">
                     {decodeHTMLEntities(agenda.title)}
                   </h3>
                   <p className="text-gray-500 line-clamp-2 mb-4 leading-relaxed">
@@ -67,7 +67,7 @@ export default async function DaftarAgenda() {
                   </p>
                   
                   <div className="flex items-center gap-4">
-                    <span className="text-sm font-semibold text-brand-blue group-hover:text-brand-yellow transition-colors inline-flex items-center gap-1">
+                    <span className="text-sm font-semibold text-brand-green group-hover:text-brand-yellow transition-colors inline-flex items-center gap-1">
                       Lihat Detail Agenda <span aria-hidden="true">&rarr;</span>
                     </span>
                     {agenda.location && (

@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfilOpen, setIsProfilOpen] = useState(false);
-  const [isBeritaOpen, setIsBeritaOpen] = useState(false);
+  const [isLiterasiOpen, setIsLiterasiOpen] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -23,7 +23,7 @@ export default function MobileMenu() {
   const closeMenu = () => {
     setIsOpen(false);
     setIsProfilOpen(false);
-    setIsBeritaOpen(false);
+    setIsLiterasiOpen(false);
   };
 
   const toggleMenu = () => {
@@ -40,17 +40,17 @@ export default function MobileMenu() {
       <button
         onClick={toggleMenu}
         className={`relative flex flex-col justify-center items-center w-12 h-12 space-y-1.5 focus:outline-none z-50 rounded-full transition-colors duration-300 ${
-          isOpen ? 'bg-blue-50' : 'bg-transparent'
+          isOpen ? 'bg-green-50' : 'bg-transparent'
         }`}
         aria-label="Toggle Menu"
       >
-        <span className={`block w-6 h-0.5 rounded-full transition-transform duration-300 ease-in-out ${isOpen ? 'bg-brand-blue rotate-45 translate-y-2' : 'bg-white'}`}></span>
-        <span className={`block w-6 h-0.5 rounded-full transition-opacity duration-300 ease-in-out ${isOpen ? 'bg-brand-blue opacity-0' : 'bg-white opacity-100'}`}></span>
-        <span className={`block w-6 h-0.5 rounded-full transition-transform duration-300 ease-in-out ${isOpen ? 'bg-brand-blue -rotate-45 -translate-y-2' : 'bg-white'}`}></span>
+        <span className={`block w-6 h-0.5 rounded-full transition-transform duration-300 ease-in-out ${isOpen ? 'bg-brand-green rotate-45 translate-y-2' : 'bg-white'}`}></span>
+        <span className={`block w-6 h-0.5 rounded-full transition-opacity duration-300 ease-in-out ${isOpen ? 'bg-brand-green opacity-0' : 'bg-white opacity-100'}`}></span>
+        <span className={`block w-6 h-0.5 rounded-full transition-transform duration-300 ease-in-out ${isOpen ? 'bg-brand-green -rotate-45 -translate-y-2' : 'bg-white'}`}></span>
       </button>
 
       <div 
-        className={`fixed inset-0 bg-brand-blue/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-brand-green/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         style={{ top: '80px' }}
@@ -65,62 +65,60 @@ export default function MobileMenu() {
       >
         <div className="flex flex-col px-6 py-6 space-y-2">
           
-          <Link href="/" onClick={closeMenu} className="flex items-center justify-between text-brand-blue hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-blue-50 transition-all">
+          <Link href="/" onClick={closeMenu} className="flex items-center justify-between text-brand-green hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-green-50 transition-all">
             <span>Beranda</span>
           </Link>
           
           <div className="flex flex-col">
             <button 
               onClick={() => setIsProfilOpen(!isProfilOpen)} 
-              className="flex items-center justify-between w-full text-brand-blue hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-blue-50 transition-all"
+              className="flex items-center justify-between w-full text-brand-green hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-green-50 transition-all"
             >
-              <span>Profil</span>
+              <span>Profil & Panduan</span>
               <svg className={`w-5 h-5 transform transition-transform duration-300 ${isProfilOpen ? 'rotate-180 text-brand-yellow' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
             </button>
             <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isProfilOpen ? 'max-h-125 opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
               <div className="flex flex-col pl-8 pr-4 py-2 border-l-2 border-gray-100 ml-6 space-y-3">
-                <Link href="/profil?category=sejarah" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Sejarah (Muqadimah)</Link>
-                <Link href="/profil?category=visi-misi" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Visi, Misi, Tujuan</Link>
-                <Link href="/profil?category=logo" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Makna Logo</Link>
-                <Link href="/profil?category=fasilitas" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Fasilitas</Link>
-                <Link href="/profil?category=kurikulum" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Kurikulum</Link>
-                <Link href="/profil?category=biaya" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Biaya Pendidikan</Link>
-                <Link href="/profil?category=brosur" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Brosur</Link>
+                <Link href="/profil?category=sejarah" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Profil & Sejarah</Link>
+                <Link href="/profil?category=visi-misi" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Visi, Misi & Tujuan</Link>
+                <Link href="/profil?category=fasilitas" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Fasilitas & Layanan</Link>
+                <Link href="/profil?category=tata-tertib" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Tata Tertib</Link>
+                <Link href="/profil?category=panduan-opac" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Panduan OPAC</Link>
+                <Link href="/profil?category=keanggotaan" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Syarat Keanggotaan</Link>
               </div>
             </div>
           </div>
           
-          <Link href="/agenda" onClick={closeMenu} className="flex items-center justify-between text-brand-blue hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-blue-50 transition-all">
-            <span>Agenda</span>
+          <Link href="/agenda" onClick={closeMenu} className="flex items-center justify-between text-brand-green hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-green-50 transition-all">
+            <span>Agenda Kegiatan</span>
           </Link>
           
           <div className="flex flex-col">
             <button 
-              onClick={() => setIsBeritaOpen(!isBeritaOpen)} 
-              className="flex items-center justify-between w-full text-brand-blue hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-blue-50 transition-all"
+              onClick={() => setIsLiterasiOpen(!isLiterasiOpen)} 
+              className="flex items-center justify-between w-full text-brand-green hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-green-50 transition-all"
             >
-              <span>Berita</span>
-              <svg className={`w-5 h-5 transform transition-transform duration-300 ${isBeritaOpen ? 'rotate-180 text-brand-yellow' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+              <span>Koleksi Literasi</span>
+              <svg className={`w-5 h-5 transform transition-transform duration-300 ${isLiterasiOpen ? 'rotate-180 text-brand-yellow' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
             </button>
-            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isBeritaOpen ? 'max-h-100 opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
+            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isLiterasiOpen ? 'max-h-100 opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
               <div className="flex flex-col pl-8 pr-4 py-2 border-l-2 border-gray-100 ml-6 space-y-3">
-                <Link href="/berita" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Semua Berita</Link>
-                <Link href="/berita?category=karier" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Karier</Link>
-                <Link href="/berita?category=kegiatan" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Kegiatan</Link>
-                <Link href="/berita?category=karya" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Karya</Link>
-                <Link href="/berita?category=prestasi" onClick={closeMenu} className="text-gray-600 hover:text-brand-blue font-medium text-sm">Prestasi</Link>
+                <Link href="/berita" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Semua Koleksi</Link>
+                <Link href="/berita?category=informasi" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Informasi</Link>
+                <Link href="/berita?category=literasi" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Literasi</Link>
+                <Link href="/berita?category=resensi" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Resensi Buku</Link>
+                <Link href="/berita?category=pengumuman" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Pengumuman</Link>
               </div>
             </div>
           </div>
-          <Link href="/guru-tendik" onClick={closeMenu} className="flex items-center justify-between text-brand-blue hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-blue-50 transition-all">
-            <span>Guru & Tendik</span>
+
+          <Link href="/guru-tendik" onClick={closeMenu} className="flex items-center justify-between text-brand-green hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-green-50 transition-all">
+            <span>Pustakawan & Staf</span>
           </Link>
+
           <div className="pt-6 pb-2 px-2 mt-4 border-t border-gray-100 flex flex-col gap-3">
-            <a href="https://alumni.muallimin.sch.id/" target="_blank" rel="noopener noreferrer" className="block text-center w-full bg-blue-50 text-brand-blue px-6 py-4 rounded-2xl font-extrabold hover:bg-blue-100 hover:shadow-lg transform hover:-translate-y-1 transition-all text-lg">
-              Portal Alumni
-            </a>
-            <a href="https://spmb.muallimin.sch.id/" target="_blank" rel="noopener noreferrer" className="block text-center w-full bg-brand-yellow text-brand-blue px-6 py-4 rounded-2xl font-extrabold hover:bg-yellow-400 hover:shadow-lg transform hover:-translate-y-1 transition-all text-lg">
-              Portal SPMB
+            <a href="https://www.libsys-online.xyz/muallimin/opac/" target="_blank" rel="noopener noreferrer" className="block text-center w-full bg-brand-yellow text-brand-green px-6 py-4 rounded-2xl font-extrabold hover:bg-yellow-400 hover:shadow-lg transform hover:-translate-y-1 transition-all text-lg">
+              Katalog OPAC
             </a>
           </div>
           
