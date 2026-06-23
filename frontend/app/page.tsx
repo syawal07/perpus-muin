@@ -4,27 +4,27 @@ import { NewsItem, AgendaItem } from "@/types";
 import StatsSection from "@/components/StatsSection";
 import HomeAgenda from "@/components/HomeAgenda";
 import HomeNews from "@/components/HomeNews";
-import HomeVideo from "@/components/HomeVideo"; // <-- Import komponen baru
+import HomeVideo from "@/components/HomeVideo";
 import StaffSection from "@/components/StaffSection";
 import SearchBar from "@/components/SearchBar"; 
 
 async function getData(endpoint: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
   
-  const res = await fetch(`${apiUrl}/api${endpoint}`, { next: { revalidate: 60 } });
-  
-  if (!res.ok) {
-    if (res.status === 404) return null;
-    throw new Error(`HTTP Error fetch ${endpoint}: ${res.status}`);
+  try {
+    const res = await fetch(`${apiUrl}/api${endpoint}`, { next: { revalidate: 60 } });
+    
+    if (!res.ok) {
+      console.warn(`[API Warning] Endpoint ${endpoint} membalas dengan status: ${res.status}`);
+      return null;
+    }
+    
+    const json = await res.json();
+    return json.data || json; 
+  } catch (error) {
+    console.error(`[API Fetch Failed] Gagal menghubungi ${endpoint}:`, error);
+    return null;
   }
-  
-  const json = await res.json();
-  
-  if (!json) {
-    throw new Error(`Invalid data format received from ${endpoint}`);
-  }
-  
-  return json.data || json; 
 }
 
 export default async function Home() {
@@ -33,12 +33,11 @@ export default async function Home() {
   
   const agendas: AgendaItem[] = await getData('/agendas') || [];
   
-  // Fetch data video (ambil 3 terbaru saja)
   const rawVideos = await getData('/videos?limit=3') || [];
   const videos = Array.isArray(rawVideos) ? rawVideos : (rawVideos.data || []);
 
   const allStaffs = await getData('/staffs') || [];
-  const homeStaffs = allStaffs.slice(0, 8); 
+  const homeStaffs = Array.isArray(allStaffs) ? allStaffs.slice(0, 8) : []; 
 
   const homePage = await getData('/pages/beranda') || {};
   const settings = await getData('/settings') || {};
@@ -112,14 +111,13 @@ export default async function Home() {
 
       <HomeAgenda agendas={agendas} />
 
-      {/* Sisipkan Komponen Video di sini (Bisa di atas atau di bawah berita) */}
       <HomeVideo videos={videos} storageUrl={storageUrl} />
 
       <HomeNews news={news} storageUrl={storageUrl} />
 
       <StaffSection staffs={homeStaffs} />
       
-      {allStaffs.length > 8 && (
+      {allStaffs && allStaffs.length > 8 && (
         <section className="bg-gray-50 pb-20 flex justify-center -mt-15 relative z-10">
           <Link 
             href="/guru-tendik" 
