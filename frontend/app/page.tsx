@@ -120,7 +120,7 @@ export default async function Home() {
       {allStaffs && allStaffs.length > 8 && (
         <section className="bg-gray-50 pb-20 flex justify-center -mt-15 relative z-10">
           <Link 
-            href="/guru-tendik" 
+            href="/pustakawan" 
             className="inline-flex items-center gap-2 bg-white border-2 border-brand-green text-brand-green hover:bg-brand-green hover:text-white px-8 py-3 rounded-full font-bold transition-all shadow-sm hover:shadow-md"
           >
             Lihat Semua Pustakawan & Staf
