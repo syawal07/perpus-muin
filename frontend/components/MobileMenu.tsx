@@ -92,6 +92,10 @@ export default function MobileMenu() {
           <Link href="/agenda" onClick={closeMenu} className="flex items-center justify-between text-brand-green hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-green-50 transition-all">
             <span>Agenda Kegiatan</span>
           </Link>
+
+          <Link href="/video" onClick={closeMenu} className="flex items-center justify-between text-brand-green hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-green-50 transition-all">
+            <span>Video Publikasi</span>
+          </Link>
           
           <div className="flex flex-col">
             <button 

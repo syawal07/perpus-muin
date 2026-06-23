@@ -4,6 +4,7 @@ import { NewsItem, AgendaItem } from "@/types";
 import StatsSection from "@/components/StatsSection";
 import HomeAgenda from "@/components/HomeAgenda";
 import HomeNews from "@/components/HomeNews";
+import HomeVideo from "@/components/HomeVideo"; // <-- Import komponen baru
 import StaffSection from "@/components/StaffSection";
 import SearchBar from "@/components/SearchBar"; 
 
@@ -32,6 +33,10 @@ export default async function Home() {
   
   const agendas: AgendaItem[] = await getData('/agendas') || [];
   
+  // Fetch data video (ambil 3 terbaru saja)
+  const rawVideos = await getData('/videos?limit=3') || [];
+  const videos = Array.isArray(rawVideos) ? rawVideos : (rawVideos.data || []);
+
   const allStaffs = await getData('/staffs') || [];
   const homeStaffs = allStaffs.slice(0, 8); 
 
@@ -106,6 +111,9 @@ export default async function Home() {
       <StatsSection data={homePage} />
 
       <HomeAgenda agendas={agendas} />
+
+      {/* Sisipkan Komponen Video di sini (Bisa di atas atau di bawah berita) */}
+      <HomeVideo videos={videos} storageUrl={storageUrl} />
 
       <HomeNews news={news} storageUrl={storageUrl} />
 

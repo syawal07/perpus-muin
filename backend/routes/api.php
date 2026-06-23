@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\StaffController;
+use App\Http\Controllers\Api\VideoController; // <-- Tambahkan import ini
 
 /*
 |--------------------------------------------------------------------------
@@ -29,12 +30,14 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::get('/agendas', [AgendaController::class, 'index']);
 Route::get('/agendas/{slug}', [AgendaController::class, 'show']);
 
-
-
 // Endpoint Berita
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{slug}', [PostController::class, 'show']);
 Route::post('/posts/{slug}/like', [PostController::class, 'like']);
+
+// Endpoint Video (Lebih rapi)
+Route::get('/videos', [VideoController::class, 'index']);
+Route::get('/videos/{slug}', [VideoController::class, 'show']);
 
 // Endpoint Halaman Statis (Page)
 Route::get('/pages', [PageController::class, 'index']);

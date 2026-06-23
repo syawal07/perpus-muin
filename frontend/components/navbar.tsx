@@ -14,7 +14,7 @@ interface NavbarProps {
 
 export default function Navbar({ settings }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isLiterasiOpen, setIsLiterasiOpen] = useState(false);
+  const [isPublikasiOpen, setIsPublikasiOpen] = useState(false);
   const [isProfilOpen, setIsProfilOpen] = useState(false);
   const pathname = usePathname();
   const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000';
@@ -81,31 +81,7 @@ export default function Navbar({ settings }: NavbarProps) {
 
             <div className="hidden md:flex items-center space-x-8 z-10">
               
-              <div 
-                className="relative group"
-                onMouseEnter={() => setIsLiterasiOpen(true)}
-                onMouseLeave={() => setIsLiterasiOpen(false)}
-              >
-                <button className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm py-2">
-                  Koleksi Literasi
-                  <svg className={`w-4 h-4 transition-transform duration-200 ${isLiterasiOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                  </svg>
-                </button>
-
-                <div 
-                  className={`absolute top-full left-0 w-48 bg-white rounded-lg shadow-xl py-2 mt-1 transition-all duration-200 origin-top ${
-                    isLiterasiOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'
-                  }`}
-                >
-                  <Link href="/berita" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Semua Koleksi</Link>
-                  <Link href="/berita?category=informasi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Informasi</Link>
-                  <Link href="/berita?category=literasi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Literasi</Link>
-                  <Link href="/berita?category=resensi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Resensi Buku</Link>
-                  <Link href="/berita?category=pengumuman" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Pengumuman</Link>
-                </div>
-              </div>
-
+              {/* Menu 1: Profil & Panduan */}
               <div 
                 className="relative group"
                 onMouseEnter={() => setIsProfilOpen(true)}
@@ -132,10 +108,38 @@ export default function Navbar({ settings }: NavbarProps) {
                 </div>
               </div>
 
-              <Link href="/agenda" className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm">
-                Agenda Kegiatan
-              </Link>
+              {/* Menu 2: Publikasi & Informasi */}
+              <div 
+                className="relative group"
+                onMouseEnter={() => setIsPublikasiOpen(true)}
+                onMouseLeave={() => setIsPublikasiOpen(false)}
+              >
+                <button className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm py-2">
+                  Publikasi & Informasi
+                  <svg className={`w-4 h-4 transition-transform duration-200 ${isPublikasiOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </button>
 
+                <div 
+                  className={`absolute top-full left-0 w-52 bg-white rounded-lg shadow-xl py-2 mt-1 transition-all duration-200 origin-top ${
+                    isPublikasiOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'
+                  }`}
+                >
+                  <div className="px-4 py-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Media & Kegiatan</div>
+                  <Link href="/berita" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Koleksi Literasi</Link>
+                  <Link href="/video" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Video Publikasi</Link>
+                  <Link href="/agenda" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Agenda Kegiatan</Link>
+                  
+                  <div className="border-t border-gray-100 my-1"></div>
+                  <div className="px-4 py-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Kategori Spesifik</div>
+                  <Link href="/berita?category=informasi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Informasi</Link>
+                  <Link href="/berita?category=resensi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Resensi Buku</Link>
+                  <Link href="/berita?category=pengumuman" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Pengumuman</Link>
+                </div>
+              </div>
+
+              {/* Menu 3: Pustakawan & Staf */}
               <Link href="/guru-tendik" className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm">
                 Pustakawan & Staf
               </Link>
