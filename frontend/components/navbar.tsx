@@ -140,7 +140,7 @@ export default function Navbar({ settings }: NavbarProps) {
               </div>
 
               {/* Menu 3: Pustakawan & Staf */}
-              <Link href="/guru-tendik" className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm">
+              <Link href="/pustakawan" className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm">
                 Pustakawan & Staf
               </Link>
               

@@ -116,7 +116,7 @@ export default function MobileMenu() {
             </div>
           </div>
 
-          <Link href="/guru-tendik" onClick={closeMenu} className="flex items-center justify-between text-brand-green hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-green-50 transition-all">
+          <Link href="/pustakawan" onClick={closeMenu} className="flex items-center justify-between text-brand-green hover:text-brand-yellow font-bold text-lg py-3 px-4 rounded-xl hover:bg-green-50 transition-all">
             <span>Pustakawan & Staf</span>
           </Link>
 
