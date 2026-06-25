@@ -5,6 +5,7 @@ import StatsSection from "@/components/StatsSection";
 import HomeAgenda from "@/components/HomeAgenda";
 import HomeNews from "@/components/HomeNews";
 import HomeVideo from "@/components/HomeVideo";
+import HomeRepositori from "@/components/HomeRepositori";
 import StaffSection from "@/components/StaffSection";
 import SearchBar from "@/components/SearchBar"; 
 
@@ -35,6 +36,9 @@ export default async function Home() {
   
   const rawVideos = await getData('/videos?limit=3') || [];
   const videos = Array.isArray(rawVideos) ? rawVideos : (rawVideos.data || []);
+
+  const rawCollections = await getData('/digital-collections?limit=3') || [];
+  const collections = Array.isArray(rawCollections) ? rawCollections : (rawCollections.data || []);
 
   const allStaffs = await getData('/staffs') || [];
   const homeStaffs = Array.isArray(allStaffs) ? allStaffs.slice(0, 8) : []; 
@@ -77,8 +81,14 @@ export default async function Home() {
             
             <div className="mt-8 flex flex-wrap gap-4">
               <Link 
-                href="/profil?category=panduan-opac" 
+                href="/repositori" 
                 className="bg-brand-yellow text-brand-green px-8 py-3.5 rounded-full font-bold text-lg hover:bg-yellow-400 hover:shadow-lg hover:-translate-y-1 transition-all"
+              >
+                Jelajahi Repositori
+              </Link>
+              <Link 
+                href="/profil?category=panduan-opac" 
+                className="bg-white/20 backdrop-blur-sm text-white border border-white/40 px-8 py-3.5 rounded-full font-bold text-lg hover:bg-white/30 hover:shadow-lg hover:-translate-y-1 transition-all"
               >
                 Panduan Pencarian
               </Link>
@@ -112,6 +122,8 @@ export default async function Home() {
       <HomeAgenda agendas={agendas} />
 
       <HomeVideo videos={videos} storageUrl={storageUrl} />
+
+      <HomeRepositori collections={collections} storageUrl={storageUrl} />
 
       <HomeNews news={news} storageUrl={storageUrl} />
 

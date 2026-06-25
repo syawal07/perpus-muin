@@ -105,8 +105,9 @@ export default function MobileMenu() {
               <span>Koleksi Literasi</span>
               <svg className={`w-5 h-5 transform transition-transform duration-300 ${isLiterasiOpen ? 'rotate-180 text-brand-yellow' : 'text-gray-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
             </button>
-            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isLiterasiOpen ? 'max-h-100 opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
+            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isLiterasiOpen ? 'max-h-[500px] opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
               <div className="flex flex-col pl-8 pr-4 py-2 border-l-2 border-gray-100 ml-6 space-y-3">
+                <Link href="/repositori" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Repositori Digital</Link>
                 <Link href="/berita" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Semua Koleksi</Link>
                 <Link href="/berita?category=informasi" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Informasi</Link>
                 <Link href="/berita?category=literasi" onClick={closeMenu} className="text-gray-600 hover:text-brand-green font-medium text-sm">Literasi</Link>

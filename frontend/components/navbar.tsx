@@ -128,6 +128,7 @@ export default function Navbar({ settings }: NavbarProps) {
                 >
                   <div className="px-4 py-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Media & Kegiatan</div>
                   <Link href="/berita" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Koleksi Literasi</Link>
+                  <Link href="/repositori" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Repositori Digital</Link>
                   <Link href="/video" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Video Publikasi</Link>
                   <Link href="/agenda" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Agenda Kegiatan</Link>
                   

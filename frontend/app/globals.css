@@ -1,16 +1,10 @@
+@import url('https://fonts.cdnfonts.com/css/opendyslexic');
 @import "tailwindcss";
 
 @theme {
-  /* Hijau Utama (bs-green) */
   --color-brand-green: #198754; 
-  
-  /* Kuning Aisyiyah (bs-warning) */
   --color-brand-yellow: #ffc107; 
-
-  /* Oranye UAD */
   --color-brand-orange: #f26522; 
-
-  /* Definisi Animasi */
   --animate-marquee: marquee 25s linear infinite;
 }
 
@@ -22,5 +16,52 @@
 @layer utilities {
   .pause-animation {
     animation-play-state: paused;
+  }
+  
+  .font-dyslexic {
+    font-family: 'OpenDyslexic', sans-serif !important;
+  }
+}
+
+@layer base {
+  html {
+    transition: font-size 0.3s ease;
+  }
+
+  body.high-contrast,
+  .high-contrast {
+    background-color: #000000 !important;
+    color: #FFFF00 !important;
+  }
+
+  .high-contrast p,
+  .high-contrast h1,
+  .high-contrast h2,
+  .high-contrast h3,
+  .high-contrast h4,
+  .high-contrast h5,
+  .high-contrast h6,
+  .high-contrast span,
+  .high-contrast a,
+  .high-contrast li,
+  .high-contrast button {
+    color: #FFFF00 !important;
+  }
+
+  .high-contrast div,
+  .high-contrast section,
+  .high-contrast main,
+  .high-contrast header,
+  .high-contrast footer,
+  .high-contrast nav,
+  .high-contrast article {
+    background-color: #000000 !important;
+    border-color: #FFFF00 !important;
+  }
+
+  .high-contrast img,
+  .high-contrast video,
+  .high-contrast iframe {
+    filter: grayscale(100%) contrast(120%);
   }
 }

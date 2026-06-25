@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// Definisikan tipe data video
 export interface VideoItem {
   id: number;
   title: string;
@@ -79,9 +78,7 @@ export default async function DaftarVideo({
               {videos.map((video) => (
                 <Link href={`/video/${video.slug}`} key={video.id} className="bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 flex flex-col cursor-pointer relative transform hover:-translate-y-1">
                   
-                  {/* Container Gambar Thumbnail */}
                   <div className="relative w-full h-56 bg-brand-green flex items-center justify-center overflow-hidden">
-                    {/* Ikon Play Overlay */}
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors z-20 flex items-center justify-center">
                        <div className="w-16 h-16 bg-brand-yellow rounded-full flex items-center justify-center text-brand-green shadow-lg transform group-hover:scale-110 transition-transform">
                           <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -93,7 +90,7 @@ export default async function DaftarVideo({
                         src={`${storageUrl}/${video.thumbnail}`} 
                         alt={video.title} 
                         fill
-                        unoptimized={true} // Tetap gunakan ini agar gambar aman!
+                        unoptimized={true}
                         sizes="(max-width: 768px) 100vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-700 z-10"
                       />
@@ -116,7 +113,6 @@ export default async function DaftarVideo({
             </div>
           )}
 
-          {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center gap-4 mt-16">
               {page > 1 ? (

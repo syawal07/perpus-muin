@@ -10,7 +10,8 @@ use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\StaffController;
-use App\Http\Controllers\Api\VideoController; // <-- Tambahkan import ini
+use App\Http\Controllers\Api\VideoController;
+use App\Http\Controllers\Api\DigitalCollectionController; // <-- Tambahkan import ini
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,7 @@ Route::get('/pages', [PageController::class, 'index']);
 Route::get('/pages/{slug}', [PageController::class, 'show']);
 
 // Endpoint Pengaturan (Settings)
-Route::get('/settings', [SettingController::class, 'getHero']); 
+Route::get('/settings', [SettingController::class, 'getHero']);
 Route::get('/settings/hero', [SettingController::class, 'getHero']);
 
 // Endpoint Profil
@@ -53,3 +54,7 @@ Route::get('/profiles/{slug}', [ProfileController::class, 'show']);
 
 // Endpoint Staff
 Route::get('/staffs', [StaffController::class, 'index']);
+
+// Endpoint Repositori Digital (Digital Collection)
+Route::get('/digital-collections', [DigitalCollectionController::class, 'index']);
+Route::get('/digital-collections/{slug}', [DigitalCollectionController::class, 'show']);
