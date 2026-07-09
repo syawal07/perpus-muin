@@ -50,7 +50,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-white flex flex-col">
-      <section className="relative w-full min-h-[90vh] flex items-center pt-24 overflow-hidden bg-brand-green">
+     <section className="relative w-full min-h-[90vh] flex items-center pt-24 overflow-hidden bg-brand-green">
         <div className="absolute inset-0 z-0">
           <Image 
             src={homePage?.image ? `${storageUrl}/${homePage.image}` : "https://muallimin.sch.id/wp-content/uploads/2023/07/DJI_0435-scaled.jpg"} 
@@ -79,35 +79,44 @@ export default async function Home() {
               <SearchBar opacUrl={currentSetting?.opac_url} />
             </div>
             
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl">
+              <a 
+                href={currentSetting?.opac_url || "https://www.libsys-online.xyz/muallimin/opac/"}
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-brand-yellow text-brand-green px-6 py-4 rounded-2xl font-bold text-lg hover:bg-yellow-400 hover:shadow-lg hover:-translate-y-1 transition-all"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                Katalog OPAC
+              </a>
+              
+              <a 
+                href="https://sites.google.com/muallimin.sch.id/perpustakaandigital/"
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-white/20 backdrop-blur-md text-white border border-white/40 px-6 py-4 rounded-2xl font-bold text-lg hover:bg-white/30 hover:shadow-lg hover:-translate-y-1 transition-all"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                Perpus Digital
+              </a>
+
               <Link 
                 href="/repositori" 
-                className="bg-brand-yellow text-brand-green px-8 py-3.5 rounded-full font-bold text-lg hover:bg-yellow-400 hover:shadow-lg hover:-translate-y-1 transition-all"
+                className="flex items-center justify-center gap-2 bg-white/20 backdrop-blur-md text-white border border-white/40 px-6 py-4 rounded-2xl font-bold text-lg hover:bg-white/30 hover:shadow-lg hover:-translate-y-1 transition-all"
               >
-                Jelajahi Repositori
-              </Link>
-              <Link 
-                href="/profil?category=panduan-opac" 
-                className="bg-white/20 backdrop-blur-sm text-white border border-white/40 px-8 py-3.5 rounded-full font-bold text-lg hover:bg-white/30 hover:shadow-lg hover:-translate-y-1 transition-all"
-              >
-                Panduan Pencarian
-              </Link>
-              <Link 
-                href="/profil?category=sejarah" 
-                className="bg-white/20 backdrop-blur-sm text-white border border-white/40 px-8 py-3.5 rounded-full font-bold text-lg hover:bg-white/30 hover:shadow-lg hover:-translate-y-1 transition-all"
-              >
-                Profil Perpustakaan
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                Karya Guru
               </Link>
             </div>
           </div>
 
-          <div className="lg:col-span-4 hidden lg:flex justify-end relative h-full w-full items-end pb-0 z-10">
-             <div className="relative w-full max-w-sm h-auto drop-shadow-[0_20px_20px_rgba(0,0,0,0.6)]">
+      <div className="lg:col-span-4 hidden lg:flex justify-end relative h-full w-full items-end pb-0 z-10">
+             <div className="relative w-full max-w-lg xl:max-w-xl h-auto drop-shadow-[0_20px_20px_rgba(0,0,0,0.6)]">
                 <Image 
                   src={homePage?.hero_logo ? `${storageUrl}/${homePage.hero_logo}` : "https://muallimin.sch.id/wp-content/uploads/2021/01/logo-muallimin-2021-1.png"}
                   alt="Model Hero"
-                  width={400}
-                  height={400}
+                  width={600}
+                  height={600}
                   className="object-contain object-bottom"
                   priority
                   unoptimized={true}

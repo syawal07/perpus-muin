@@ -14,8 +14,9 @@ interface NavbarProps {
 
 export default function Navbar({ settings }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isPublikasiOpen, setIsPublikasiOpen] = useState(false);
   const [isProfilOpen, setIsProfilOpen] = useState(false);
+  const [isLayananOpen, setIsLayananOpen] = useState(false);
+  const [isPublikasiOpen, setIsPublikasiOpen] = useState(false);
   const pathname = usePathname();
   const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000';
 
@@ -81,7 +82,6 @@ export default function Navbar({ settings }: NavbarProps) {
 
             <div className="hidden md:flex items-center space-x-8 z-10">
               
-              {/* Menu 1: Profil & Panduan */}
               <div 
                 className="relative group"
                 onMouseEnter={() => setIsProfilOpen(true)}
@@ -103,12 +103,39 @@ export default function Navbar({ settings }: NavbarProps) {
                   <Link href="/profil?category=visi-misi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Visi, Misi & Tujuan</Link>
                   <Link href="/profil?category=fasilitas" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Fasilitas & Layanan</Link>
                   <Link href="/profil?category=tata-tertib" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Tata Tertib</Link>
-                  <Link href="/profil?category=panduan-opac" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Panduan OPAC</Link>
+                  <Link href="/profil?category=panduan-layanan" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Panduan Layanan Digital</Link>
                   <Link href="/profil?category=keanggotaan" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Syarat Keanggotaan</Link>
                 </div>
               </div>
 
-              {/* Menu 2: Publikasi & Informasi */}
+              <div 
+                className="relative group"
+                onMouseEnter={() => setIsLayananOpen(true)}
+                onMouseLeave={() => setIsLayananOpen(false)}
+              >
+                <button className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm py-2">
+                  Layanan Digital
+                  <svg className={`w-4 h-4 transition-transform duration-200 ${isLayananOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </button>
+
+                <div 
+                  className={`absolute top-full left-0 w-56 bg-white rounded-lg shadow-xl py-2 mt-1 transition-all duration-200 origin-top ${
+                    isLayananOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'
+                  }`}
+                >
+                  <div className="px-4 py-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Katalog & Repositori</div>
+                  <a href={currentSetting?.opac_url || "https://www.libsys-online.xyz/muallimin/opac/"} target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Katalog OPAC</a>
+                  <a href="https://sites.google.com/muallimin.sch.id/perpustakaandigital/" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Perpustakaan Digital</a>
+                  <Link href="/repositori" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Repositori Karya Guru</Link>
+                  
+                  <div className="border-t border-gray-100 my-1"></div>
+                  <div className="px-4 py-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Interaksi Pemustaka</div>
+                  <a href="https://wa.me/6287838149459" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Tanya Pustakawan (Virtual)</a>
+                </div>
+              </div>
+
               <div 
                 className="relative group"
                 onMouseEnter={() => setIsPublikasiOpen(true)}
@@ -128,19 +155,18 @@ export default function Navbar({ settings }: NavbarProps) {
                 >
                   <div className="px-4 py-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Media & Kegiatan</div>
                   <Link href="/berita" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Koleksi Literasi</Link>
-                  <Link href="/repositori" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Repositori Digital</Link>
                   <Link href="/video" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Video Publikasi</Link>
                   <Link href="/agenda" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Agenda Kegiatan</Link>
                   
                   <div className="border-t border-gray-100 my-1"></div>
                   <div className="px-4 py-2 text-[11px] font-bold text-gray-400 uppercase tracking-wider">Kategori Spesifik</div>
+                  <Link href="/berita?category=literasi-digital" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Literasi Digital</Link>
                   <Link href="/berita?category=informasi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Informasi</Link>
                   <Link href="/berita?category=resensi" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Resensi Buku</Link>
                   <Link href="/berita?category=pengumuman" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-green">Pengumuman</Link>
                 </div>
               </div>
 
-              {/* Menu 3: Pustakawan & Staf */}
               <Link href="/pustakawan" className="text-white hover:text-brand-yellow font-semibold transition-colors flex items-center gap-1 drop-shadow-sm">
                 Pustakawan & Staf
               </Link>
@@ -148,11 +174,6 @@ export default function Navbar({ settings }: NavbarProps) {
             </div>
             
             <div className="flex items-center justify-end z-20 gap-4">
-              <div className="hidden md:flex items-center gap-3">
-                <a href={currentSetting?.opac_url || "https://www.libsys-online.xyz/muallimin/opac/"} target="_blank" rel="noopener noreferrer" className="inline-block bg-brand-yellow text-brand-green px-7 py-2.5 rounded-full font-bold hover:bg-yellow-400 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
-                  Katalog OPAC
-                </a>
-              </div>
               <MobileMenu />
             </div>
 
