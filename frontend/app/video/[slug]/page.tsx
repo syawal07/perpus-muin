@@ -11,24 +11,6 @@ export interface VideoItem {
   created_at: string;
 }
 
-function getEmbedUrl(url: string): string {
-  if (!url) return "";
-
-  const ytRegEx = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
-  const ytMatch = url.match(ytRegEx);
-  if (ytMatch && ytMatch[1]) {
-    return `https://www.youtube.com/embed/${ytMatch[1]}`;
-  }
-
-  const driveRegEx = /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
-  const driveMatch = url.match(driveRegEx);
-  if (driveMatch && driveMatch[1]) {
-    return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
-  }
-
-  return url;
-}
-
 async function getVideoDetail(slug: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
   
@@ -57,14 +39,13 @@ export default async function DetailVideo({
 }) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
+  const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
   const video: VideoItem | null = await getVideoDetail(slug);
 
   if (!video) {
     notFound();
   }
-
-  const embedUrl = getEmbedUrl(video.video_path);
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col pt-32 pb-24">
@@ -80,12 +61,17 @@ export default async function DetailVideo({
         <div className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
           
           <div className="w-full bg-black aspect-video relative flex items-center justify-center">
-            <iframe
-              src={embedUrl}
-              className="w-full h-full absolute top-0 left-0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+            <video 
+              controls 
+              controlsList="nodownload"
+              poster={`${storageUrl}/${video.thumbnail}`}
+              preload="metadata"
+              playsInline
+              className="w-full h-full object-contain"
+            >
+              <source src={`${storageUrl}/${video.video_path}`} type="video/mp4" />
+              <source src={`${storageUrl}/${video.video_path}`} type="video/webm" />
+            </video>
           </div>
 
           <div className="p-8 md:p-12">

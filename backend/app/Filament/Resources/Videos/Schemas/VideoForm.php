@@ -21,34 +21,27 @@ class VideoForm
                     ->maxLength(255)
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (string $operation, $state, callable $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
-
                 TextInput::make('slug')
                     ->disabled()
                     ->dehydrated()
                     ->required()
                     ->maxLength(255)
                     ->unique(Video::class, 'slug', ignoreRecord: true),
-
                 Textarea::make('description')
                     ->label('Deskripsi Video')
                     ->columnSpanFull(),
-
                 FileUpload::make('thumbnail')
                     ->label('Gambar Sampul (Thumbnail)')
                     ->image()
-                    ->imageEditor()
-                    ->optimize('webp')
                     ->directory('videos/thumbnails')
                     ->required()
                     ->maxSize(2048),
-
-                TextInput::make('video_path')
-                    ->label('Link Video (YouTube atau Google Drive)')
-                    ->placeholder('Contoh: https://youtu.be/xxx atau https://drive.google.com/file/d/xxx')
-                    ->url()
+                FileUpload::make('video_path')
+                    ->label('File Video (MP4/WEBM)')
+                    ->acceptedFileTypes(['video/mp4', 'video/webm'])
+                    ->directory('videos/files')
                     ->required()
-                    ->helperText('Dukung link YouTube (embed) atau link pratinjau Google Drive.')
-                    ->columnSpanFull(),
+                    ->maxSize(51200),
             ]);
     }
 }
