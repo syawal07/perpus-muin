@@ -52,12 +52,12 @@ class DigitalCollectionForm
                     ->directory('collections/covers')
                     ->maxSize(2048),
 
-                FileUpload::make('file_path')
-                    ->label('File Dokumen (Wajib PDF)')
-                    ->acceptedFileTypes(['application/pdf'])
-                    ->directory('collections/files')
+                TextInput::make('file_path')
+                    ->label('Link Google Drive Dokumen')
+                    ->placeholder('https://drive.google.com/file/d/....')
+                    ->url()
                     ->required()
-                    ->maxSize(20480),
+                    ->helperText('Pastikan akses link Google Drive diatur ke "Siapa saja yang memiliki tautan" (Anyone with the link).'),
             ]);
     }
 }

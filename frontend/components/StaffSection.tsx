@@ -28,9 +28,27 @@ export default function StaffSection({ staffs, title = "Pustakawan & Staf", show
     if (!staffs || staffs.length === 0) return [];
     
     return staffs.filter((staff) => {
-      const matchTab = activeTab === 'Semua' || staff.type === activeTab;
-      const matchSearch = staff.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          (staff.subject && staff.subject.toLowerCase().includes(searchQuery.toLowerCase()));
+      const dbType = staff.type ? staff.type.toLowerCase() : '';
+      let matchTab = false;
+
+      if (activeTab === 'Semua') {
+        matchTab = true;
+      } else if (activeTab === 'Kepala Perpustakaan') {
+        matchTab = dbType.includes('kepala');
+      } else if (activeTab === 'Pustakawan') {
+        matchTab = dbType.includes('pustakawan');
+      } else if (activeTab === 'Staf Layanan & IT') {
+        matchTab = dbType.includes('layanan') || dbType.includes('it');
+      } else if (activeTab === 'Tenaga Administrasi') {
+        matchTab = dbType.includes('administrasi') || dbType.includes('admin');
+      } else {
+        matchTab = staff.type === activeTab;
+      }
+
+      const searchLower = searchQuery.toLowerCase();
+      const matchSearch = staff.name.toLowerCase().includes(searchLower) || 
+                          (staff.subject && staff.subject.toLowerCase().includes(searchLower));
+      
       return matchTab && matchSearch;
     });
   }, [staffs, activeTab, searchQuery]);
@@ -131,7 +149,7 @@ export default function StaffSection({ staffs, title = "Pustakawan & Staf", show
                 <div className="p-5 flex flex-col grow">
                   <h3 className="font-bold text-gray-800 text-lg mb-1 line-clamp-2 group-hover:text-brand-green transition-colors">{staff.name}</h3>
                   <div className="flex items-center gap-2 mt-auto">
-                    <span className={`w-2 h-2 rounded-full ${staff.type.includes('Pustakawan') ? 'bg-brand-yellow' : 'bg-gray-400'}`}></span>
+                    <span className={`w-2 h-2 rounded-full ${staff.type.toLowerCase().includes('pustakawan') ? 'bg-brand-yellow' : 'bg-gray-400'}`}></span>
                     <p className="text-sm font-medium text-gray-500">
                       {staff.type}
                     </p>

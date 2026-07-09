@@ -35,6 +35,23 @@ async function getCollectionDetail(slug: string) {
   }
 }
 
+function getDrivePreviewUrl(url: string, storageUrl: string) {
+  if (!url) return '';
+  
+  if (url.includes('drive.google.com')) {
+    const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+      return `https://drive.google.com/file/d/${match[1]}/preview`;
+    }
+  }
+  
+  if (url.startsWith('http')) {
+    return url;
+  }
+  
+  return `${storageUrl}/${url}`;
+}
+
 export default async function DetailRepositori({
   params,
 }: {
@@ -50,7 +67,7 @@ export default async function DetailRepositori({
     notFound();
   }
 
-  const pdfUrl = `${storageUrl}/${collection.file_path}`;
+  const previewUrl = getDrivePreviewUrl(collection.file_path, storageUrl);
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col pt-32 pb-24">
@@ -96,21 +113,22 @@ export default async function DetailRepositori({
                 <span className="font-semibold text-gray-800">{collection.views_count} Kali</span>
               </div>
               <a 
-                href={pdfUrl} 
+                href={collection.file_path.startsWith('http') ? collection.file_path : `${storageUrl}/${collection.file_path}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-full mt-4 bg-brand-green text-white text-center py-3 rounded-xl font-bold hover:bg-green-700 transition-colors block"
               >
-                Unduh PDF
+                Buka di Google Drive
               </a>
             </div>
           </div>
 
-          <div className="w-full lg:w-2/3 h-[600px] lg:h-auto min-h-[800px] bg-gray-200 relative">
+          <div className="w-full lg:w-2/3 h-150 lg:h-auto min-h-200 bg-gray-200 relative">
             <iframe 
-              src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+              src={previewUrl}
               className="absolute inset-0 w-full h-full border-0"
               title={collection.title}
+              allow="autoplay"
             />
           </div>
 
