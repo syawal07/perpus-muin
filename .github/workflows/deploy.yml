@@ -1,0 +1,78 @@
+name: Deploy Perpus App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Frontend Dependencies
+      run: |
+        cd frontend
+        npm install
+
+    - name: Generate Frontend .env File
+      run: |
+        cd frontend
+        echo "PORT=4002" > .env
+        echo "NEXT_PUBLIC_API_URL=https://adminperpus.muallimin.sch.id" >> .env
+        echo "NEXT_PUBLIC_STORAGE_URL=https://adminperpus.muallimin.sch.id/storage" >> .env
+
+    - name: Build Next.js Application
+      run: |
+        cd frontend
+        npm run build
+
+    - name: Transfer Frontend Files to Server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        port: 22
+        # Ekstensi sudah disesuaikan menjadi next.config.mjs
+        source: "frontend/.next,frontend/public,frontend/package.json,frontend/next.config.mjs"
+        target: "/home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/"
+        strip_components: 1 
+        overwrite: true
+
+    - name: Execute Server Updates (Frontend & Backend)
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        port: 22
+        script: |
+          echo "🚀 Mulai update Frontend..."
+          cd /home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/
+          npm install --production
+          pm2 restart perpus-fe
+          pm2 save
+          
+          echo "⚙️ Mulai update Backend (Admin Perpus)..."
+          # Masuk ke folder markas besar perpus
+          cd /home/muallimi/perpus-app/
+          
+          # Menarik kode terbaru dari GitHub
+          git pull origin main
+          
+          # Masuk ke folder backend untuk eksekusi Laravel
+          cd backend
+          composer install --optimize-autoloader --no-dev
+          php artisan migrate --force
+          php artisan optimize:clear
+          
+          echo "✅ Semua update Perpus selesai!"
