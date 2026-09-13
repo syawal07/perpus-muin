@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { ProfileItem } from "@/types";
+export const dynamic = 'force-dynamic';
+
 
 async function getProfileByCategory(category: string): Promise<ProfileItem | null> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';

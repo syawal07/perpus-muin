@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { NewsItem } from "@/types";
+export const dynamic = 'force-dynamic';
 import ArticleInteractions from "@/components/ArticleInteractions";
 
 function decodeHTMLEntities(text: string) {

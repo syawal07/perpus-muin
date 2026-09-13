@@ -1,5 +1,6 @@
 import Link from "next/link";
 import StaffSection from "@/components/StaffSection";
+export const dynamic = 'force-dynamic';
 
 async function getStaffData() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';

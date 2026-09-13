@@ -8,6 +8,8 @@ import HomeVideo from "@/components/HomeVideo";
 import HomeRepositori from "@/components/HomeRepositori";
 import StaffSection from "@/components/StaffSection";
 import SearchBar from "@/components/SearchBar"; 
+export const dynamic = 'force-dynamic';
+
 
 async function getData(endpoint: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { AgendaItem } from "@/types";
+export const dynamic = 'force-dynamic';
+
 
 function decodeHTMLEntities(text: string) {
   return text.replace(/&amp;/g, '&').replace(/&#8217;/g, "'").replace(/&#8211;/g, "-").replace(/&quot;/g, '"');
