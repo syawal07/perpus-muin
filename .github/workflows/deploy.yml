@@ -48,7 +48,7 @@ jobs:
         strip_components: 1 
         overwrite: true
 
-    - name: Execute Server Updates (Frontend & Backend)
+   - name: Execute Server Updates (Frontend & Backend)
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVER_HOST }}
@@ -58,18 +58,19 @@ jobs:
         script: |
           echo "🚀 Mulai update Frontend..."
           cd /home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/
-          npm install --production
+          
+          # Bersihkan sisa cache memori NPM sebelumnya
+          npm cache clean --force
+          
+          # Instalasi mode sangat ringan (tanpa audit dan tanpa dev-dependencies)
+          npm install --omit=dev --no-audit --no-fund
+          
           pm2 restart perpus-fe
           pm2 save
           
           echo "⚙️ Mulai update Backend (Admin Perpus)..."
-          # Masuk ke folder markas besar perpus
           cd /home/muallimi/perpus-app/
-          
-          # Menarik kode terbaru dari GitHub
           git pull origin main
-          
-          # Masuk ke folder backend untuk eksekusi Laravel
           cd backend
           composer install --optimize-autoloader --no-dev
           php artisan migrate --force
