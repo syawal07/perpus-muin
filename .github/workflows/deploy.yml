@@ -42,7 +42,8 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         port: 22
-        source: "frontend/.next,frontend/public,frontend/package.json,frontend/next.config.mjs"
+        # PENAMBAHAN: frontend/.env wajib ikut dikirim ke server
+        source: "frontend/.next,frontend/public,frontend/package.json,frontend/next.config.mjs,frontend/.env"
         target: "/home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/"
         strip_components: 1 
         overwrite: true
