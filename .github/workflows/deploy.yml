@@ -42,7 +42,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         port: 22
-        # PENAMBAHAN: frontend/.env wajib ikut dikirim ke server
+        # Mengirim semua hasil build beserta .env
         source: "frontend/.next,frontend/public,frontend/package.json,frontend/next.config.mjs,frontend/.env"
         target: "/home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/"
         strip_components: 1 
@@ -59,21 +59,21 @@ jobs:
           echo "🚀 Mulai update Frontend..."
           cd /home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/
           
-          # Bersihkan sisa cache memori NPM sebelumnya
           npm cache clean --force
-          
-          # Instalasi mode sangat ringan (tanpa audit dan tanpa dev-dependencies)
           npm install --omit=dev --no-audit --no-fund
           
-          pm2 restart perpus-fe
+          # Memaksa PM2 membaca ulang file .env yang baru dikirim
+          pm2 restart perpus-fe --update-env
           pm2 save
           
           echo "⚙️ Mulai update Backend (Admin Perpus)..."
           cd /home/muallimi/perpus-app/
           git pull origin main
           cd backend
-          composer install --optimize-autoloader --no-dev
-          php artisan migrate --force
-          php artisan optimize:clear
+          
+          # Eksekusi dengan PHP 8.2 secara eksplisit (Standar DirectAdmin)
+          /usr/local/php82/bin/php /usr/local/bin/composer install --optimize-autoloader --no-dev
+          /usr/local/php82/bin/php artisan migrate --force
+          /usr/local/php82/bin/php artisan optimize:clear
           
           echo "✅ Semua update Perpus selesai!"
