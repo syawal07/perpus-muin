@@ -47,7 +47,7 @@ jobs:
         strip_components: 1 
         overwrite: true
 
-    - name: Execute Server Updates (Frontend & Backend)
+    - name: Execute Server Updates & Restart PM2
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVER_HOST }}
@@ -59,8 +59,27 @@ jobs:
           cd /home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/
           
           npm cache clean --force
-          npm install --omit=dev --no-audit --no-fund
-          pm2 restart perpus-fe
+          npm install --production --no-audit --no-fund
+          
+          # Buat ekosistem PM2 mutlak khusus Perpus
+          cat << 'EOF' > ecosystem.config.js
+          module.exports = {
+            apps: [{
+              name: "perpus-fe",
+              script: ".next/standalone/server.js",
+              env: {
+                PORT: 4002,
+                HOSTNAME: "127.0.0.1",
+                NEXT_PUBLIC_API_URL: "https://adminperpus.muallimin.sch.id/api",
+                NEXT_PUBLIC_STORAGE_URL: "https://adminperpus.muallimin.sch.id/storage"
+              }
+            }]
+          }
+          EOF
+          
+          # Hapus mesin lama dan nyalakan ulang dengan konfigurasi baru
+          pm2 delete perpus-fe || true
+          pm2 start ecosystem.config.js
           pm2 save
           
           echo "⚙️ Mulai update Backend (Admin Perpus)..."
