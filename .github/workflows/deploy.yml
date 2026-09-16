@@ -27,7 +27,7 @@ jobs:
       run: |
         cd frontend
         echo "PORT=4002" > .env.production
-        echo "NEXT_PUBLIC_API_URL=https://adminperpus.muallimin.sch.id/api" >> .env.production
+        echo "NEXT_PUBLIC_API_URL=https://adminperpus.muallimin.sch.id" >> .env.production
         echo "NEXT_PUBLIC_STORAGE_URL=https://adminperpus.muallimin.sch.id/storage" >> .env.production
 
     - name: Build Next.js Application and Bundle Standalone
@@ -50,7 +50,7 @@ jobs:
             env: {
               PORT: 4002,
               HOSTNAME: "127.0.0.1",
-              NEXT_PUBLIC_API_URL: "https://adminperpus.muallimin.sch.id/api",
+              NEXT_PUBLIC_API_URL: "https://adminperpus.muallimin.sch.id",
               NEXT_PUBLIC_STORAGE_URL: "https://adminperpus.muallimin.sch.id/storage"
             }
           }]
