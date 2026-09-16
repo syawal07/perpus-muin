@@ -1,4 +1,4 @@
-name: Deploy Perpus App (Zero to Hero CI/CD)
+name: Deploy Perpus App
 
 on:
   push:
@@ -18,42 +18,30 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Install Frontend Dependencies (Hanya di Github Actions)
+    - name: Install Frontend Dependencies
       run: |
         cd frontend
         npm install
 
-    - name: Generate Frontend .env.production File
-      # Standalone membaca .env.production padaa saat runtime/build
+    - name: Generate Frontend Environment
       run: |
         cd frontend
         echo "PORT=4002" > .env.production
         echo "NEXT_PUBLIC_API_URL=https://adminperpus.muallimin.sch.id/api" >> .env.production
         echo "NEXT_PUBLIC_STORAGE_URL=https://adminperpus.muallimin.sch.id/storage" >> .env.production
 
-    - name: Build Next.js Application & Rakit Standalone
+    - name: Build Next.js Application and Bundle Standalone
       run: |
         cd frontend
         npm run build
         
-        # --- STANDALONE PREPARATION (SANGAT VITAL) ---
-        # Next.js standalone tidak otomatis mengikutsertakan folder static & public. 
-        # Kita harus merakitnya menjadi 1 folder utuh bernama 'deploy_build'
-        
         mkdir deploy_build
-        
-        # 1. Pindahkan hasil core standalone
-        cp -r .next/standalone/* deploy_build/
-        
-        # 2. Pindahkan asset public dan static css/js
+        cp -r .next/standalone/. deploy_build/
         cp -r public deploy_build/public
         mkdir -p deploy_build/.next
         cp -r .next/static deploy_build/.next/static
-        
-        # 3. Pindahkan environment
         cp .env.production deploy_build/
         
-        # 4. Buat file ekosistem PM2 langsung di sini agar ikut tertransfer
         cat << 'EOF' > deploy_build/ecosystem.config.js
         module.exports = {
           apps: [{
@@ -69,22 +57,19 @@ jobs:
         }
         EOF
 
-    - name: Transfer File Matang (Artifact) ke Server VPS
+    - name: Transfer Artifact to VPS
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         port: 22
-        # Kita hanya mentransfer folder 'deploy_build' yang sudah matang
-        source: "frontend/deploy_build/*"
+        source: "frontend/deploy_build"
         target: "/home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/"
-        # Strip component level 2 membuang nama direktori 'frontend/deploy_build' 
-        # sehingga isinya langsung mendarat di root public_html server Anda
         strip_components: 2 
         overwrite: true
 
-    - name: Execute Server Updates & Restart PM2
+    - name: Execute Server Updates and PM2
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVER_HOST }}
@@ -92,19 +77,13 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         port: 22
         script: |
-          echo "🚀 Mulai Eksekusi Frontend di Server..."
+          echo "Mulai Eksekusi Frontend di Server..."
           cd /home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/
           
-          # Hapus npm install dari server! Kita tidak butuh lagi karena mode standalone
-          # sudah membungkus (bundling) seluruh dependencies yang dibutuhkan.
-          
-          # Restart atau jalankan ulang PM2 menggunakan ecosystem.config.js
           pm2 start ecosystem.config.js || pm2 reload perpus-fe
           pm2 save
           
-          echo "⚙️ Mulai update Backend (Admin Perpus)..."
-          # KOREKSI: Sebelumnya Anda menulis 'perpus-app', saya ubah ke 'perpus-muin'
-          # sesuai dengan nama repositori yang Anda kloning di tahap awal.
+          echo "Mulai update Backend Admin Perpus..."
           cd /home/muallimi/perpus-muin/
           git pull origin main
           
@@ -114,4 +93,4 @@ jobs:
           /usr/local/php82/bin/php artisan optimize:clear
           /usr/local/php82/bin/php artisan optimize
           
-          echo "✅ Semua update CI/CD Perpus selesai! Zero Downtime Achieved."
+          echo "Semua update CI/CD Perpus selesai."
