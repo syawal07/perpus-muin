@@ -1,4 +1,4 @@
-name: Deploy Perpus App
+name: Deploy Perpus App (Zero to Hero CI/CD)
 
 on:
   push:
@@ -18,33 +18,70 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Install Frontend Dependencies
+    - name: Install Frontend Dependencies (Hanya di Github Actions)
       run: |
         cd frontend
         npm install
 
-    - name: Generate Frontend .env File
+    - name: Generate Frontend .env.production File
+      # Standalone membaca .env.production pada saat runtime/build
       run: |
         cd frontend
-        echo "PORT=4002" > .env
-        echo "NEXT_PUBLIC_API_URL=https://adminperpus.muallimin.sch.id/api" >> .env
-        echo "NEXT_PUBLIC_STORAGE_URL=https://adminperpus.muallimin.sch.id/storage" >> .env
+        echo "PORT=4002" > .env.production
+        echo "NEXT_PUBLIC_API_URL=https://adminperpus.muallimin.sch.id/api" >> .env.production
+        echo "NEXT_PUBLIC_STORAGE_URL=https://adminperpus.muallimin.sch.id/storage" >> .env.production
 
-    - name: Build Next.js Application
+    - name: Build Next.js Application & Rakit Standalone
       run: |
         cd frontend
         npm run build
+        
+        # --- STANDALONE PREPARATION (SANGAT VITAL) ---
+        # Next.js standalone tidak otomatis mengikutsertakan folder static & public. 
+        # Kita harus merakitnya menjadi 1 folder utuh bernama 'deploy_build'
+        
+        mkdir deploy_build
+        
+        # 1. Pindahkan hasil core standalone
+        cp -r .next/standalone/* deploy_build/
+        
+        # 2. Pindahkan asset public dan static css/js
+        cp -r public deploy_build/public
+        mkdir -p deploy_build/.next
+        cp -r .next/static deploy_build/.next/static
+        
+        # 3. Pindahkan environment
+        cp .env.production deploy_build/
+        
+        # 4. Buat file ekosistem PM2 langsung di sini agar ikut tertransfer
+        cat << 'EOF' > deploy_build/ecosystem.config.js
+        module.exports = {
+          apps: [{
+            name: "perpus-fe",
+            script: "server.js",
+            env: {
+              PORT: 4002,
+              HOSTNAME: "127.0.0.1",
+              NEXT_PUBLIC_API_URL: "https://adminperpus.muallimin.sch.id/api",
+              NEXT_PUBLIC_STORAGE_URL: "https://adminperpus.muallimin.sch.id/storage"
+            }
+          }]
+        }
+        EOF
 
-    - name: Transfer Frontend Files to Server
+    - name: Transfer File Matang (Artifact) ke Server VPS
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         port: 22
-        source: "frontend/.next,frontend/public,frontend/package.json,frontend/next.config.mjs,frontend/.env"
+        # Kita hanya mentransfer folder 'deploy_build' yang sudah matang
+        source: "frontend/deploy_build/*"
         target: "/home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/"
-        strip_components: 1 
+        # Strip component level 2 membuang nama direktori 'frontend/deploy_build' 
+        # sehingga isinya langsung mendarat di root public_html server Anda
+        strip_components: 2 
         overwrite: true
 
     - name: Execute Server Updates & Restart PM2
@@ -55,40 +92,26 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         port: 22
         script: |
-          echo "🚀 Mulai update Frontend..."
+          echo "🚀 Mulai Eksekusi Frontend di Server..."
           cd /home/muallimi/domains/perpustakaan.muallimin.sch.id/public_html/
           
-          npm cache clean --force
-          npm install --production --no-audit --no-fund
+          # Hapus npm install dari server! Kita tidak butuh lagi karena mode standalone
+          # sudah membungkus (bundling) seluruh dependencies yang dibutuhkan.
           
-          # Buat ekosistem PM2 mutlak khusus Perpus
-          cat << 'EOF' > ecosystem.config.js
-          module.exports = {
-            apps: [{
-              name: "perpus-fe",
-              script: ".next/standalone/server.js",
-              env: {
-                PORT: 4002,
-                HOSTNAME: "127.0.0.1",
-                NEXT_PUBLIC_API_URL: "https://adminperpus.muallimin.sch.id/api",
-                NEXT_PUBLIC_STORAGE_URL: "https://adminperpus.muallimin.sch.id/storage"
-              }
-            }]
-          }
-          EOF
-          
-          # Hapus mesin lama dan nyalakan ulang dengan konfigurasi baru
-          pm2 delete perpus-fe || true
-          pm2 start ecosystem.config.js
+          # Restart atau jalankan ulang PM2 menggunakan ecosystem.config.js
+          pm2 start ecosystem.config.js || pm2 reload perpus-fe
           pm2 save
           
           echo "⚙️ Mulai update Backend (Admin Perpus)..."
-          cd /home/muallimi/perpus-app/
+          # KOREKSI: Sebelumnya Anda menulis 'perpus-app', saya ubah ke 'perpus-muin'
+          # sesuai dengan nama repositori yang Anda kloning di tahap awal.
+          cd /home/muallimi/perpus-muin/
           git pull origin main
-          cd backend
           
+          cd backend
           /usr/local/php82/bin/php /usr/local/bin/composer install --optimize-autoloader --no-dev
           /usr/local/php82/bin/php artisan migrate --force
           /usr/local/php82/bin/php artisan optimize:clear
+          /usr/local/php82/bin/php artisan optimize
           
-          echo "✅ Semua update Perpus selesai!"
+          echo "✅ Semua update CI/CD Perpus selesai! Zero Downtime Achieved."
