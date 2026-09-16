@@ -24,7 +24,7 @@ jobs:
         npm install
 
     - name: Generate Frontend .env.production File
-      # Standalone membaca .env.production pada saat runtime/build
+      # Standalone membaca .env.production padaa saat runtime/build
       run: |
         cd frontend
         echo "PORT=4002" > .env.production
