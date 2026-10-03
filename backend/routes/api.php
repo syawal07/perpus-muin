@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\StaffController;
 use App\Http\Controllers\Api\VideoController;
 use App\Http\Controllers\Api\DigitalCollectionController; // <-- Tambahkan import ini
+use App\Http\Controllers\Api\FaqController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +59,6 @@ Route::get('/staffs', [StaffController::class, 'index']);
 // Endpoint Repositori Digital (Digital Collection)
 Route::get('/digital-collections', [DigitalCollectionController::class, 'index']);
 Route::get('/digital-collections/{slug}', [DigitalCollectionController::class, 'show']);
+
+// Endpoint FAQ
+Route::get('/faqs', [FaqController::class, 'index']);

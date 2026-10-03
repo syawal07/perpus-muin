@@ -6,10 +6,11 @@ import HomeAgenda from "@/components/HomeAgenda";
 import HomeNews from "@/components/HomeNews";
 import HomeVideo from "@/components/HomeVideo";
 import HomeRepositori from "@/components/HomeRepositori";
+import FaqSection from "@/components/FaqSection";
 import StaffSection from "@/components/StaffSection";
 import SearchBar from "@/components/SearchBar"; 
-export const dynamic = 'force-dynamic';
 
+export const dynamic = 'force-dynamic';
 
 async function getData(endpoint: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -135,6 +136,8 @@ export default async function Home() {
       <HomeVideo videos={videos} storageUrl={storageUrl} />
 
       <HomeRepositori collections={collections} storageUrl={storageUrl} />
+
+      <FaqSection />
 
       <HomeNews news={news} storageUrl={storageUrl} />
 
