@@ -5,10 +5,10 @@ namespace App\Filament\Resources\Faqs\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
+// Menggunakan namespace Actions global (Filament v4/v5)
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 
 class FaqsTable
 {
@@ -31,18 +31,18 @@ class FaqsTable
                     ->label('Aktif')
                     ->sortable(),
             ])
-            ->defaultSort('sort_order', 'asc') // Default urutan berdasarkan sort_order terkecil
+            ->defaultSort('sort_order', 'asc')
             ->filters([
-                // Filter belum diperlukan sesuai instruksi audit, menjaga fitur tetap ringan
+                // Filter belum diperlukan
             ])
-            ->actions([
+            // Pada Filament terbaru menggunakan recordActions, bukan actions
+            ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
             ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+            // Pada Filament terbaru menggunakan groupedBulkActions
+            ->groupedBulkActions([
+                DeleteBulkAction::make(),
             ]);
     }
 }
